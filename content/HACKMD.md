@@ -1,9 +1,3 @@
-# Slides
-
-The following is a set of slides which you can copy and paste into hackmd to replicate, if you like.
-
----
-
 # Introduction to Rust 
 
 
@@ -31,9 +25,9 @@ This workshop will primarily focus on introducing those new to Substrate/Polkado
 
 * By the end of this workshop, you should:
   * Have Rust, cargo, and its associated tooling installed
-  * Learn crucial Rust concepts needed to use the Polkadot SDK
+  * Learn overarching Rust concepts needed to start Substrate dev
   * Run your first lines of Rust code, and be aware of some of its foundational concepts
-  * Be exposed to an actual pallet environment, and learn its structure
+  * Be exposed to an actual pallet environment
 
 ---
 
@@ -44,6 +38,28 @@ This workshop will primarily focus on introducing those new to Substrate/Polkado
 - Should take you less than 15 mins!
 - Also, for later, run: `cargo install cargo-expand`
 
+---
+
+## Clone the workshop
+
+```shell
+git clone git@github.com:CrackTheCode016/intro-to-rust-workshop.git
+```
+
+---
+
+## Run Hello World!
+
+```shell
+cargo run --bin scratchpad
+```
+
+```shell
+   Compiling scratchpad v0.1.0 (/Users/bader/Documents/ethdenver/webzero-intro-rust/scratchpad)
+    Finished dev [unoptimized + debuginfo] target(s) in 0.93s
+     Running `target/debug/scratchpad`
+Hello, world!
+```
 ---
 
 ## Why Rust for blockchains?
@@ -358,7 +374,12 @@ impl pallet_uke::Config for Runtime {
 * Our goal: provide a way to create factories for multiple processes of the same kind
 * Raw Materials -> Processes -> Products
 * Example: IronOre -> Process It -> Steel
-* We can also have many processes operating at the same time!
+
+---
+
+## Open `scratchpad/src/factory.rs`
+
+Later, we'll import this as a module inside of `main.rs`
 
 ---
 
@@ -500,6 +521,8 @@ impl Process for OreProcess {
 ---
 
 ## Running our Factory
+
+- Go to `scrachpad/src/main.rs` and replace the main function with:
 
 ```rust!
 /// Do factory stuff.
