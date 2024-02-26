@@ -2,6 +2,7 @@
 
 > The slides are available on hackMD, but also here in the repo:[HACKMD.md.](./content/HACKMD.md).
 > Examples for teaching a quick "Rust 101" is also available: [EXAMPLES.md](./content/EXAMPLES.md)
+> The hosted version can be found [here](https://hackmd.io/@Iu0IylwRSxWo5qCZHN4fPw/introtorust101).
 
 This workshop focuses on two main objectives, mainly: 
 
