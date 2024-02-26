@@ -1,6 +1,7 @@
 # WebZero Hackerhouse Rust Workshop - An Intro to Rust
 
-> The slides are available on hackMD, but also here in the repo:[ HACKMD.md.](HACKMD.md)
+> The slides are available on hackMD, but also here in the repo:[HACKMD.md.](./content/HACKMD.md).
+> Examples for teaching a quick "Rust 101" is also available: [EXAMPLES.md](./content/EXAMPLES.md)
 
 This workshop focuses on two main objectives, mainly: 
 
@@ -53,5 +54,5 @@ In our scenario, we have a raw material, iron ore (`IronOre`), and we wish to pr
 
 ## Example steps to follow
 
-See the hackMD slide readme for more detail:[ HACKMD.](./HACKMD.md)
+See the hackMD slide readme for more detail:[ HACKMD.](./content/HACKMD.md).
 
