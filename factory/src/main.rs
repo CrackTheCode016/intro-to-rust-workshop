@@ -12,7 +12,7 @@ trait Process {
 }
 
 /// What a factory looks like.  Each factory can only process one type of thing, in theory we could
-// "parallelize" these. You can think of these belts as parachains on Polkadot, which execute transactions horizontally.
+// "parallelize" these. You can think of these processes as parachains on Polkadot, which execute transactions horizontally.
 // Note that we wanted a multi-process factory, we would need to use dynamic dispatch for both processes (Vec<Box<dyn Process>>)
 pub struct Factory<P: Process> {
     factory_id: u32,
@@ -42,7 +42,7 @@ impl<P: Process> Factory<P> {
 
     // Run the factory
     pub fn run(&mut self) {
-        // run all belts
+        // run all processes
         self.process_all();
     }
 }
