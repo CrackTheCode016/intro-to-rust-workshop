@@ -62,6 +62,24 @@ Hello, world!
 ```
 ---
 
+## Rust && Polkadot History
+
+* Rust Launch - 2015
+* Polkadot whitepaper in 2016 (genesis block in 2020)
+* Polkadot writtten in Rust
+* So is Substrate, Cumulus... most things.
+
+---
+
+## Polkadot's Contributions
+
+* Wasmi - WebAssembly interpreter
+* Polkavm - RISC-V based virtual machine
+* SCALE-codec - serialization format
+* Contributions to other libraries - libp2p, etc
+
+---
+
 ## Why Rust for blockchains?
 
 * TLDR - Safe and fast code.
@@ -69,6 +87,12 @@ Hello, world!
 * A good option for sensitive applications
 * Strict and extensible type system (static & strongly typed)
 * The Rust compiler yells at you.. a lot (_in a good way!_)
+
+---
+
+## Also :p
+
+![image](https://hackmd.io/_uploads/H1RZbpohT.png)
 
 ---
 
@@ -197,13 +221,24 @@ struct Person {
 
 ## Rust 101 - Extending Structs
 
+- One is more like a constructor
+- Using `&self` requires the struct to be instantiated first
+
 ```rust
 impl Person {
-    fn new(name: String, age: u32) -> Self {
-        Person { name, age }
+    fn new(name: &str, age: u32) -> Self {
+        Person { String::from(name), age }
     }
-    // Other methods.. i.e., "print_person"..
+    
+    fn say_name(&self) {
+        println!("yo my name is {}", self.name);
+    }
 }
+
+// .. later
+
+Person::new("Bader", 22);
+Person.say_name();
 ```
 
 ---
@@ -222,6 +257,9 @@ impl Sound for Person {
         println!("hello, {}", self.name)
     }
 }
+
+// .. later
+person.make_sound(); // "hello, name"
 ```
 
 ---
@@ -340,6 +378,7 @@ println!();
 
 * Pallets are building blocks for your blockchain
 * Each pallet's configuration is a trait, called `Config`, which has associated types.
+* The runtime itself has a configuration trait
 
 ---
 
@@ -347,12 +386,12 @@ println!();
 
 ```rust=
 /// Configure the pallet by specifying the parameters and types on which it depends.
-    #[pallet::config]
-    pub trait Config: frame_system::Config {
-        /// The max amount of messages per user per conversation
-        #[pallet::constant]
-        type MaxMessageAmount: Get<u32>;
-    }
+#[pallet::config]
+pub trait Config: frame_system::Config {
+    /// The max amount of messages per user per conversation
+    #[pallet::constant]
+    type MaxMessageAmount: Get<u32>;
+}
 ```
 
 ---
@@ -371,6 +410,7 @@ impl pallet_uke::Config for Runtime {
 ---
 
 ## Workshop Time: Factory Example
+
 * Our goal: provide a way to create factories for multiple processes of the same kind
 * Raw Materials -> Processes -> Products
 * Example: IronOre -> Process It -> Steel
@@ -390,7 +430,7 @@ Later, we'll import this as a module inside of `main.rs`
 * This is only one type of process per factory (homogenous factory)
 
 ```rust=
-struct Factory<P: Process> {
+pub struct Factory<P: Process> {
     factory_id: u32,
     processes: Vec<P>,
     completed_products: HashMap<usize, P::Product>,
@@ -403,10 +443,10 @@ struct Factory<P: Process> {
 
 ```rust!
 impl<P: Process> Factory<P> {
-    // Our "constructor"
-    fn new(factory_id: u32) -> Self {
-        Factory { factory_id, processes: vec![], completed_products: HashMap::new() }
-    }
+// Our "constructor"
+pub fn new(factory_id: u32) -> Self {
+    Factory { factory_id, processes: vec![], completed_products: HashMap::new() }
+}
 ```
 
 ---
@@ -414,7 +454,7 @@ impl<P: Process> Factory<P> {
 ## Factory Methods
 
 ```rust!
-fn process_all(&mut self) {
+pub fn process_all(&mut self) {
     // loop thru and run "push_along_belt", then push the products to completed products.
     for (id, process) in self.processes.iter().enumerate() {
         println!("Processing {}...", id);
@@ -430,14 +470,15 @@ fn process_all(&mut self) {
 ## Factory Methods
 
 ```rust!
-fn add_new_belt(&mut self, process: P) {
-    self.processes.push(process)
-}
+    pub fn add_new_process(&mut self, process: P) {
+        self.processes.push(process)
+    }
 
-// Run the factory
-fn run(&mut self) {
-    // run all belts
-    self.process_all();
+    // Run the factory
+    pub fn run(&mut self) {
+        // run all belts
+        self.process_all();
+    }
 }
 ```
 
@@ -472,8 +513,8 @@ trait Process {
 ## Raw Material: IronOre
 
 ```rust!
-struct OreBelt {
-    amount: u32
+pub struct IronOre {
+    pub amount: u32
 }
 ```
 
@@ -483,8 +524,8 @@ struct OreBelt {
 
 ```rust!
 #[derive(Debug, Clone)]
-struct Steel {
-    amount: u32,
+pub struct Steel {
+    pub amount: u32,
 }
 ```
 
@@ -494,8 +535,8 @@ struct Steel {
 
 
 ```rust!
-struct OreProcess {
-    amount: u32
+pub struct OreProcess {
+    pub amount: u32
 }
 ```
 
@@ -554,9 +595,19 @@ https://github.com/CrackTheCode016/substrate-pallet-template
 ---
 
 
+## Configuring Traits
+
+- https://paritytech.github.io/polkadot-sdk/master/frame_system/pallet/trait.Config.html
+
+- *The main purpose of this trait is to act as an interface between this pallet and the runtime in which it is embedded in. A type, function, or constant in this trait is essentially left to be configured by the runtime that includes this pallet.*
+
+---
+
 ## Where to go next
 
 * [The Rust Book](https://doc.rust-lang.org/book/ch10-01-syntax.html)
 * [Rust State Machine by Shawn Tabrizi](https://www.shawntabrizi.com/rust-state-machine-mdbook/)
 * [Substrate Node Template](https://github.com/substrate-developer-hub/substrate-node-template)
+* [Substate in a nutshell](https://www.parity.io/blog/substrate-in-a-nutshell/)
+* [On generics and associated types](https://blog.thomasheartman.com/posts/on-generics-and-associated-types)
 
