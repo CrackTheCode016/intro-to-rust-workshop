@@ -20,6 +20,8 @@ struct Factory<P: Process> {
     completed_products: HashMap<usize, P::Product>,
 }
 
+
+
 impl<P: Process> Factory<P> {
     // Our "constructor"
     fn new(factory_id: u32) -> Self {
