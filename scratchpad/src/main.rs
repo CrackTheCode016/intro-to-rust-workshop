@@ -1,4 +1,4 @@
-/// # Welcome to your scratchpad/
+/// # Welcome to your scratchpad
 /// ---
 /// This serves as a place for your to try out code.
 
@@ -9,7 +9,7 @@ mod factory;
 /// After you actually code the factory logic and types, you can import them like so:
 
 // TODO: Uncomment!
-use factory::{Factory, OreProcess};
+// use factory::{Factory, OreProcess};
 
 /// Once imported, you can easily utilize them in our main function to:
 /// 1) Create a new factory

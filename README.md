@@ -21,7 +21,7 @@ It is also catered to a Substrate-style version of development, in which types a
 This project is a workspace, primarily so that we can explain what one is.  It doesn't use it in any meaningful way yet, but it's a place to keep all of our crates.
 
 - `scratchpad` - where you will do the majority of your work
-- `factory` - an implemented version of what is covered in the workshop
+- `factory` - an implemented version of what is covered in the workshop (cheat sheet basically)
 
 ## Story: The Factory
 
@@ -36,7 +36,7 @@ A completed version of this is located within `factory`, which one could theorit
 
 ### Analogies to draw
 
-- The factory is really a sort of state machine, accepting inputs, transforming them somehow, then storing them again. 
+- The factory is really a sort of state machine, accepting inputs, transforming them somehow, then storing them again (in the future, it may be more prudent to represent the factory this way).
 - A process is analogous to a state transition.  It is also kind of a glorified conversion.
 - The factory, could in theory, receive products from other factories to further process.
 

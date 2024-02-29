@@ -34,9 +34,9 @@ This workshop will primarily focus on introducing those new to Substrate/Polkado
 ## Install Rust
 
 - https://www.rust-lang.org/tools/install
-- To verify, run `cargo --version` and `rustc --version`
+- To verify, run `cargo --version` or `rustc --version`
 - Should take you less than 15 mins!
-- Also, for later, run: `cargo install cargo-expand`
+- Also, for later, run: `cargo install cargo-expand` (optional)
 
 ---
 
@@ -60,6 +60,15 @@ cargo run --bin scratchpad
      Running `target/debug/scratchpad`
 Hello, world!
 ```
+
+---
+
+## Cargo Cheat Sheet
+
+- `cargo check` - less than building, checks if it can compile
+- `cargo run` - builds and runs
+- `cargo build` - just builds
+
 ---
 
 ## Rust && Polkadot History
@@ -101,7 +110,6 @@ Hello, world!
 - Ownership in Rust - avoiding common mem managment
 
 ```rust
-
 fn take_my_value(str: String) {
     println!("{str}");
 }
@@ -137,6 +145,7 @@ error[E0382]: borrow of moved value: `my_name`
 * Rust can compile to WebAssembly, allowing interop between languages
 * Once you know it, it's easy to prototype with
 * Bottomline: protects against human error
+* Shameless shill: badery.co built with Rust (wasm-based blog)
 
 ---
 
@@ -150,7 +159,25 @@ error[E0382]: borrow of moved value: `my_name`
 ## Rust 101 - Speedrun
 
 We will quickly go over some Rust concepts.
+
 <sup>Note that this is just what's important for us right now, there is obviously a lot more in Rust</sup>
+
+---
+
+## Rust 101 - The 101
+
+- Strongly and statically typed
+- Focuses on memory safety
+- Combines concepts of object-oriented and functional programming
+- Powerful memory managment system w/o a garbage collector
+
+---
+
+## Rust 101 - Terminology
+
+- A Rust project / package is called a **crate**
+- A workspace is multiple crates as a single project
+- Cargo is our build tool
 
 ---
 
@@ -171,7 +198,7 @@ let mut age: u64 = 22;
 ## Rust 101 - Collections
 
 * `Vec` = Growable arrays (handy macro)
-* `HashMap` = Sets/Dictionary
+* `HashMap` = Sets/Dictionary (`std::collections::HashMap`)
 * `String` = a `&str` you can modify
 
 ```rust!
@@ -318,6 +345,38 @@ type Product = Table;
 
 ---
 
+## What's the diff?
+
+- Associated Types - Use when you only need to implement a trait once.
+
+
+```rust
+pub struct EvmRuntime;
+
+impl RuntimeConfig for EvmRuntime {
+    type Balance = u128;
+    type AccountId = [u8; 64];
+    type ExecutableCode = String;
+}
+```
+
+---
+
+## What's the diff?
+
+- Generics - Use for when you need to implement a trait for multiple types.
+
+```rust
+// 32 Bit Signed Integer
+let squared_i32 = square::<i32>(10);
+// 32 Bit Unsigned Integer
+let squared_u32 = square::<u32>(10);
+// Floating Point Number
+let squared_f32 = square::<f32>(10.0);
+```
+
+---
+
 ## Rust 101 - Trait Bounds
 
 * Bound placeholder types (generics) with traits
@@ -328,6 +387,15 @@ fn make_lots_of_noise<T: Sound>(thing: T, thing2: T) {
     //.. other stuff
     thing.make_sound();
     //.. more stuff
+}
+```
+
+- Generics & associated types being used 😲
+
+```rust
+// Output is an associated type of Mul
+fn square<T: Mul<Output = T> + Copy>(x: T) -> T {
+    x * x
 }
 ```
 
@@ -359,17 +427,34 @@ println!();
 
 ---
 
+```rust
+macro_rules! println {
+    () => { ... };
+    ($($arg:tt)*) => { ... };
+}
+```
+
+---
+
+## Rust 101 - Expanding Macros
+
+* If you installed cargo-expand..
+* `cargo expand` in any crate that has macros will give you the output of the macro
+
+---
+
 ## Generic Programming
 
 * Now, to put it together
-* Generic Programming: MAke assumptions about *behavior*, but not specific *implemention*
+* Generic Programming: Make assumptions about *behavior*, but not specific *implemention*
+* Generic traits - creating reusable APIs
 
 ---
 
 ## Example: Polkadot!
 
 * Doesn't make assumptions about what you implement
-* Uses traits and generics to tell you _how to implement_
+* Uses traits and generics to tell you _how to implement_. (Blocks, extrinsics, fork choice rules..)
 * Traits used as a _guide_ for how to implement common components (i.e., a block, a transaction, a pallet)
 
 ---
@@ -409,7 +494,7 @@ impl pallet_uke::Config for Runtime {
 
 ---
 
-## Workshop Time: Factory Example
+## Workshop Time: Factory Example 🏭
 
 * Our goal: provide a way to create factories for multiple processes of the same kind
 * Raw Materials -> Processes -> Products
@@ -590,7 +675,7 @@ fn main() {
 
 * Usually this is with the node-template, but this specific repo is just the pallet on its own
 
-https://github.com/CrackTheCode016/substrate-pallet-template
+https://github.com/Uke-Messaging/uke-pallet
 
 ---
 
@@ -603,6 +688,10 @@ https://github.com/CrackTheCode016/substrate-pallet-template
 
 ---
 
+## Questions
+
+---
+
 ## Where to go next
 
 * [The Rust Book](https://doc.rust-lang.org/book/ch10-01-syntax.html)
@@ -611,3 +700,8 @@ https://github.com/CrackTheCode016/substrate-pallet-template
 * [Substate in a nutshell](https://www.parity.io/blog/substrate-in-a-nutshell/)
 * [On generics and associated types](https://blog.thomasheartman.com/posts/on-generics-and-associated-types)
 
+--- 
+
+## Feedback!
+
+<insert-form-here>
